@@ -89,7 +89,6 @@ const startTimer = (date) => {
  * @param {*} param0 Элемент кнопки.
  */
 const handleVideo = ({ target }) => {
-    console.log(target);
     const info = target.parentElement;
     isPlay = !isPlay;
     info.classList.toggle(classes.hidden, isPlay);
