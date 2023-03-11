@@ -2,12 +2,16 @@ import '../styles/reset.scss';
 import '../styles/mixins.scss';
 import '../styles/styles.scss';
 
+let isPlay = false;
 const classes = {
-    opened: 'opened'
+    opened: 'opened',
+    hidden: 'hidden'
 }
 const header = document.querySelector('.header');
 const menuLink = document.querySelectorAll('.menu-link');
 const menuButton = document.querySelector('.header-menu__button');
+const video = document.getElementById('video');
+const videoButton = document.querySelector(".video-btn");
 
 /**
  * Переключает меню в режим виден / скрыт.
@@ -80,6 +84,20 @@ const startTimer = (date) => {
     }, 1000);
 }
 
-startTimer('November 11, 2022 00:00:00');
+/**
+ * Запускает или ставит на паузу воспроизведение видео.
+ * @param {*} param0 Элемент кнопки.
+ */
+const handleVideo = ({ target }) => {
+    console.log(target);
+    const info = target.parentElement;
+    isPlay = !isPlay;
+    info.classList.toggle(classes.hidden, isPlay);
+    target.innerText = isPlay ? 'Pause' : 'Play';
+    isPlay ? video.play() : video.pause();
+}
+
+startTimer('November 11, 2023 00:00:00');
 menuButton.addEventListener('click', toggleMenu);
+videoButton.addEventListener('click', handleVideo);
 menuLink.forEach((link) => link.addEventListener('click', scrollToSection));
