@@ -3,10 +3,17 @@ import '../styles/mixins.scss';
 import '../styles/styles.scss';
 
 let isPlay = false;
+const checkboxes = {
+    requirements: ['minimum', 'recommended'],
+    versions: ['standard', 'limited']
+}
 const classes = {
     opened: 'opened',
-    hidden: 'hidden'
+    hidden: 'hidden',
+    active: 'active'
 }
+
+const checkbox = document.querySelectorAll('.checkbox');
 const header = document.querySelector('.header');
 const menuLink = document.querySelectorAll('.menu-link');
 const menuButton = document.querySelector('.header-menu__button');
@@ -96,7 +103,28 @@ const handleVideo = ({ target }) => {
     isPlay ? video.play() : video.pause();
 }
 
+/**
+ * Переключает описание по клику.
+ * @param {*} param0 checked - положение переключателя. name - название блока.
+ */
+const handleCheckbox = ({ currentTarget: { checked, name } }) => {
+    const { active } = classes;
+    const value = checkboxes[name][Number(checked)];
+    const list = document.getElementById(value);
+    const tabs = document.querySelectorAll(`[data-${name}]`);
+    const siblings = list.parentElement.children;
+
+    for (const item of siblings) item.classList.remove(active);
+    for (const tab of tabs) {
+        tab.classList.remove(active);
+        tab.dataset[name] === value && tab.classList.add(active);
+    }
+
+    list.classList.add(active);
+}
+
 startTimer('November 11, 2023 00:00:00');
 menuButton.addEventListener('click', toggleMenu);
 videoButton.addEventListener('click', handleVideo);
 menuLink.forEach((link) => link.addEventListener('click', scrollToSection));
+checkbox.forEach((box) => box.addEventListener('click', handleCheckbox));
