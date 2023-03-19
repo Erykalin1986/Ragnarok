@@ -170,9 +170,9 @@
                             <li>Trigger effect required</li>
                         </ul>
 
-                        <div class="editions-item__price" data-value="1">18.99$</div>
+                        <div class="editions-item__price">18.99$</div>
 
-                        <div class="editions-item__btn buy-button">buy now</div>
+                        <div class="editions-item__btn buy-button" data-value="1">buy now</div>
                     </div>
 
                     <div class="editions-item">
@@ -269,7 +269,7 @@
                     <div class="explore-info flex flex-center">
                         <div class="explore-img">
                             <div class="explore-img__wrap" style="background-image: url(./assets/images/bg-card1.png)">
-                                <img src="./assets/images/pc.png" alt="" />
+                                <img src="./assets/images/pc.png" alt="pc.png" />
                             </div>
                         </div>
 
@@ -591,12 +591,12 @@
             <div class="footer-top flex">
                 <ul class="footer-menu flex flex-center">
                     <li></li>
-                    <li><a class="menu-link" href="#editions">editions</a></li>
-                    <li><a class="menu-link" href="#controller">controller</a></li>
-                    <li><a class="menu-link" href="#about">ABOUT GAME</a></li>
-                    <li><a class="menu-link" href="#explore">Explore</a></li>
-                    <li><a class="menu-link" href="#news">news</a></li>
-                    <li><a class="menu-link" href="#faq">FAQ</a></li>
+                    <li><a data-text="editions" class="menu-link" href="#editions">editions</a></li>
+                    <li><a data-text="controller" class="menu-link" href="#controller">controller</a></li>
+                    <li><a data-text="about" class="menu-link" href="#about">ABOUT GAME</a></li>
+                    <li><a data-text="explore" class="menu-link" href="#explore">Explore</a></li>
+                    <li><a data-text="news" class="menu-link" href="#news">news</a></li>
+                    <li><a data-text="faq" class="menu-link" href="#faq">FAQ</a></li>
                 </ul>
 
                 <div class="footer-lang flex">
@@ -606,8 +606,8 @@
                         <div class="footer-lang__current">english</div>
 
                         <div class="footer-lang__content">
-                            <div class="footer-lang__content-item">Русский</div>
-                            <div class="footer-lang__content-item">English</div>
+                            <div class="footer-lang__content-item language" data-lang="ru">Русский</div>
+                            <div class="footer-lang__content-item language" data-lang="en">English</div>
                         </div>
                     </div>
                 </div>

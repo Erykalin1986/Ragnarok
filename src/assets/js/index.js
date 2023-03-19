@@ -2,6 +2,7 @@ import "swiper/swiper.min.css";
 import "../styles/reset.scss";
 import "../styles/styles.scss";
 import Swiper, { Navigation } from "swiper";
+import { languages } from "../js/languages.js";
 Swiper.use([Navigation]);
 
 let isPlay = false;
@@ -14,6 +15,20 @@ const classes = {
   hidden: "hidden",
   active: "active",
 };
+const values = [
+  {
+    price: 19.99,
+    version: "Standard Edition",
+  },
+  {
+    price: 18.99,
+    version: "Standard Edition",
+  },
+  {
+    price: 29.99,
+    version: "Deluxe Edition",
+  },
+];
 
 const checkbox = document.querySelectorAll(".checkbox");
 const header = document.querySelector(".header");
@@ -21,7 +36,15 @@ const menuLink = document.querySelectorAll(".menu-link");
 const menuButton = document.querySelector(".header-menu__button");
 const video = document.getElementById("video");
 const videoButton = document.querySelector(".video-btn");
-const faqItem = document.querySelectorAll('.faq-item');
+const faqItem = document.querySelectorAll(".faq-item");
+const sections = document.querySelectorAll(".section");
+const language = document.querySelectorAll(".language");
+const buyButton = document.querySelectorAll(".buy-button");
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const modalVersion = document.querySelector(".modal-version");
+const modalPrice = document.querySelector(".modal-total__price");
+const modalClose = document.querySelector(".modal-close");
 
 /**
  * Переключает меню в режим виден / скрыт.
@@ -149,16 +172,80 @@ const initSlider = () => {
 const handleFaqItem = ({ currentTarget: target }) => {
   target.classList.toggle(classes.opened);
   const isOpened = target.classList.contains(classes.opened);
-  const height = target.querySelector('p').clientHeight;
-  const content = target.querySelector('.faq-item__content');
+  const height = target.querySelector("p").clientHeight;
+  const content = target.querySelector(".faq-item__content");
 
   content.style.height = `${isOpened ? height : 0}px`;
+};
+
+/**
+ * Действие при прокрутке страницы.
+ */
+const handleScroll = () => {
+  const { scrollY: y, innerHeight: h } = window;
+  sections.forEach((section) => {
+    if (y > section.offsetTop - h / 1.5)
+      section.classList.remove(classes.hidden);
+  });
+};
+
+/**
+ * Меняет техт на странице для выбранного языка.
+ */
+const setTexts = () => {
+  const lang = localStorage.getItem("lang") || "ru";
+  const content = languages[lang];
+
+  Object.entries(content).forEach(([key, value]) => {
+    const items = document.querySelectorAll(`[data-text=${key}]`);
+    items.forEach((item) => (item.innerText = value));
+  });
+};
+
+/**
+ * Переключает язык сайта.
+ * @param {*} param0 Ссылка на выбранный язык.
+ */
+const toggleLanguage = ({ target }) => {
+  const { lang } = target.dataset;
+  if (!lang) return;
+
+  localStorage.setItem("lang", lang);
+  setTexts();
+};
+
+/**
+ * Открывает модальное окно.
+ * @param {*} param0 Объект с названием версии и стоимости игры.
+ */
+const handleBuyButton = ({ currentTarget: target }) => {
+  const { value } = target.dataset;
+  if (!value) return;
+
+  const { price, version } = values[value];
+  modalVersion.innerText = version;
+  modalPrice.innerText = `${price}$`;
+  modal.classList.add(classes.opened);
+  overlay.classList.add(classes.opened);
+}
+
+/**
+ * Закрывает модальное окно.
+ */
+const closeModal = () => {
+  modal.classList.remove(classes.opened);
+  overlay.classList.remove(classes.opened);
 }
 
 initSlider();
+setTexts();
 startTimer("November 11, 2023 00:00:00");
+window.addEventListener("scroll", handleScroll);
 menuButton.addEventListener("click", toggleMenu);
 videoButton.addEventListener("click", handleVideo);
 menuLink.forEach((link) => link.addEventListener("click", scrollToSection));
 checkbox.forEach((box) => box.addEventListener("click", handleCheckbox));
 faqItem.forEach((item) => item.addEventListener("click", handleFaqItem));
+language.forEach((lang) => lang.addEventListener("click", toggleLanguage));
+buyButton.forEach((btn) => btn.addEventListener("click", handleBuyButton));
+modalClose.addEventListener("click", closeModal);

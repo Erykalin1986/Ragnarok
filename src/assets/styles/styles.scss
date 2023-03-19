@@ -1,34 +1,65 @@
 @import "./colors.scss";
-@import "./mixins.scss";
+@import "../styles/mixins.scss";
 
 .section {
+  &.hidden {
+    .editions {
+      &-item {
+        transition: transform 0s;
+        transform: translateX(-2000px);
+      }
+    }
+
+    h2 {
+      transition: opacity 0s;
+      opacity: 0;
+    }
+
+    .dual,
+    .explore-info {
+      transition: column-gap 0s;
+      column-gap: 250%;
+    }
+
+    .video {
+      transition: transform 0s;
+      transform: scale(0);
+    }
+
+    .news,
+    .faq-item {
+      transition: transform 0s;
+      transform: translateX(-200%);
+    }
+  }
+
   &-main {
     padding-top: 40px;
     position: relative;
     max-width: 1920px;
     margin: 0 auto;
     min-height: 700px;
-  }
 
-  &::after,
-  &::before {
-    height: 764px;
-    width: 1363px;
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: -1;
-  }
+    &:after,
+    &:before {
+      height: 764px;
+      width: 1363px;
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: -1;
+    }
 
-  &::before {
-    background: url("../images/bg.png") no-repeat center/cover;
-  }
+    &:after {
+      background: url(../images/snow.gif) no-repeat center/cover;
+      opacity: 0.1;
+    }
 
-  &::after {
-    background: url("../images/snow.gif") no-repeat center/cover;
-    opacity: 0.1;
+    &:before {
+      background: url(../images/bg.png) no-repeat center/cover;
+    }
   }
 
   &-dual {
@@ -66,7 +97,7 @@
       span {
         width: 25px;
         height: 2px;
-        background-color: $white;
+        background: $white;
         position: relative;
         display: block;
 
@@ -76,12 +107,12 @@
           content: "";
           width: 12px;
           height: 2px;
-          background-color: $white;
+          background: $white;
           position: absolute;
           transition: width 0.25s;
         }
 
-        &::after {
+        &:after {
           top: 5px;
         }
 
@@ -109,7 +140,7 @@
 
     &__link {
       position: relative;
-      color: rgb(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.5);
       transition: color 0.25s;
 
       &:hover {
@@ -117,8 +148,8 @@
       }
 
       &.lang {
-        font-weight: 700;
         color: $white;
+        font-weight: 700;
         cursor: pointer;
 
         &:hover {
@@ -132,7 +163,7 @@
           height: 12px;
           fill: $white;
           transform: rotate(180deg);
-          margin-right: 9px;
+          margin-left: 9px;
         }
       }
     }
@@ -140,7 +171,7 @@
     &__languages {
       padding: 10px 15px;
       border-radius: 6px;
-      background-color: $dark;
+      background: $dark;
       position: absolute;
       top: 100%;
       display: none;
@@ -150,7 +181,7 @@
       font-weight: 500;
       cursor: pointer;
       font-size: 13px;
-      color: rgb(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.5);
       transition: color 0.25s;
 
       &:hover {
@@ -244,8 +275,9 @@
   }
 
   &-button {
-    @include button();
+    @include button;
     @include hoverViolet;
+    margin-top: 36px;
   }
 }
 
@@ -264,6 +296,14 @@
     padding: 17px;
     transition: transform 0.25s ease-in-out;
     transform: translateX(0);
+
+    &:nth-child(2) {
+      transition-delay: 0.25s;
+    }
+
+    &:last-child {
+      transition-delay: 0.5s;
+    }
 
     &__img {
       border-radius: 6px;
@@ -308,7 +348,7 @@
     }
 
     &__btn {
-      @include button();
+      @include button;
       @include hoverViolet;
       padding: 8px 18px;
       font-size: 13px;
@@ -351,7 +391,7 @@
     }
 
     &__button {
-      @include button();
+      @include button($orange);
       @include hoverOrange;
       padding: 14px 19px;
       font-weight: 500;
@@ -418,7 +458,7 @@
   }
 
   &-btn {
-    background-color: $dark;
+    background: $dark;
     border-radius: 6px;
     padding: 9px 26px;
     font-weight: 500;
@@ -427,15 +467,11 @@
     display: inline-block;
     cursor: pointer;
     margin: 28px auto 0 auto;
-    transition: background-color 0.25s;
+    transition: background 0.25s;
     text-transform: uppercase;
 
     &:hover {
-      background-color: #525c67;
-    }
-
-    &:active {
-      background-color: #434c57;
+      background: #525c67;
     }
   }
 }
@@ -666,7 +702,7 @@
     }
 
     &__button {
-      background-color: $grey;
+      background: $grey;
       border-radius: 6px;
       font-weight: 500;
       font-size: 13px;
@@ -676,13 +712,13 @@
       margin-top: 10px;
       padding: 8px 30px;
       display: flex;
-      min-width: max-content;
+      width: max-content;
       margin-left: auto;
       margin-top: auto;
-      transition: background-color 0.25s;
+      transition: background 0.25s;
 
       &:hover {
-        background-color: $dark;
+        background: $dark;
       }
     }
   }
@@ -915,6 +951,197 @@
         transform: scale(-1, 1);
       }
     }
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+
+  &.opened {
+    transition: all 0.25s;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &-wrapper {
+    background: linear-gradient(180deg, #30373f 0%, #000000 99.82%);
+    border-radius: 12px;
+    padding: 32px;
+    position: relative;
+
+    &::before {
+      width: 90%;
+      height: 90%;
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: -1;
+      background: url(../images/modal.png) no-repeat center/cover;
+    }
+  }
+
+  &-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    color: #d9d9d9;
+    cursor: pointer;
+  }
+
+  &-title {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: $violet;
+  }
+
+  &-version {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 25px;
+    text-align: center;
+    color: $white;
+    text-transform: uppercase;
+    margin-top: 5px;
+  }
+
+  &-description {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #d9d9d9;
+  }
+
+  &-total {
+    font-weight: 500;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 14px;
+    line-height: 17px;
+    color: $white;
+
+    &__price {
+      font-size: 20px;
+    }
+  }
+
+  &-submit {
+    @include button;
+    @include hoverViolet;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.form {
+  margin-top: 17px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 16px;
+  justify-content: space-between;
+  width: 470px;
+
+  &-group {
+    width: calc(50% - 13px);
+
+    &.full {
+      width: 100%;
+    }
+
+    label {
+      display: block;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 12px;
+      text-transform: uppercase;
+      color: $white;
+      margin-bottom: 7px;
+    }
+
+    input {
+      background: $dark;
+      border-radius: 6px;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      text-transform: uppercase;
+      padding: 16px 14px;
+      color: #d9d9d9;
+      width: 100%;
+    }
+  }
+
+  &-checkbox {
+    position: relative;
+    column-gap: 12px;
+
+    .check {
+      background: $dark;
+      width: 25px;
+      height: 25px;
+      text-align: center;
+      border-radius: 6px;
+    }
+
+    label {
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 12px;
+      text-transform: uppercase;
+      color: $white;
+
+      .red {
+        color: #ff4136;
+      }
+    }
+
+    input {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+
+      &:checked {
+        & + .check {
+          &::before {
+            content: "✓";
+          }
+        }
+      }
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+  background: rgba(0, 0, 0, 0.75);
+  width: 100%;
+  height: 100%;
+
+  &.opened {
+    visibility: visible;
+    opacity: 1;
+    z-index: 998;
   }
 }
 
