@@ -21,6 +21,7 @@ const menuLink = document.querySelectorAll(".menu-link");
 const menuButton = document.querySelector(".header-menu__button");
 const video = document.getElementById("video");
 const videoButton = document.querySelector(".video-btn");
+const faqItem = document.querySelectorAll('.faq-item');
 
 /**
  * Переключает меню в режим виден / скрыт.
@@ -141,9 +142,23 @@ const initSlider = () => {
   });
 };
 
+/**
+ * Раскрывает элемент блока часто задаваемых вопросов.
+ * @param {*} param0 Объект класса PointerEvent состояния события DOM.
+ */
+const handleFaqItem = ({ currentTarget: target }) => {
+  target.classList.toggle(classes.opened);
+  const isOpened = target.classList.contains(classes.opened);
+  const height = target.querySelector('p').clientHeight;
+  const content = target.querySelector('.faq-item__content');
+
+  content.style.height = `${isOpened ? height : 0}px`;
+}
+
 initSlider();
 startTimer("November 11, 2023 00:00:00");
 menuButton.addEventListener("click", toggleMenu);
 videoButton.addEventListener("click", handleVideo);
 menuLink.forEach((link) => link.addEventListener("click", scrollToSection));
 checkbox.forEach((box) => box.addEventListener("click", handleCheckbox));
+faqItem.forEach((item) => item.addEventListener("click", handleFaqItem));
